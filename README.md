@@ -46,4 +46,23 @@ npm i
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 ```
 
-- 웹팩 플러그인 ForkTsCheckerWebpackPlugin: 타입스크립트 체킹와 웹팩 실행이 동시에 돌아간다.
+- 웹팩 플러그인 ForkTsCheckerWebpackPlugin: 타입스크립트 체킹와 웹팩 실행이 동시에 돌아간다. 성능이 좋아짐
+
+### 코드 스플리팅 적용
+
+```command
+npm i @loadable/component
+npm i --save-dev @types/loadable__component
+```
+
+```ts
+import loadable from "@loadable/component";
+
+const LogIn = loadable(() => import("@pages/LogIn"));
+```
+
+- [제로초의 sleact 저장소 - alecture](https://github.com/ZeroCho/sleact/tree/master/alecture)
+
+```command
+npm i @emotion/styled @emotion/react
+```
