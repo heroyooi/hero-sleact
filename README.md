@@ -62,7 +62,33 @@ const LogIn = loadable(() => import("@pages/LogIn"));
 ```
 
 - [제로초의 sleact 저장소 - alecture](https://github.com/ZeroCho/sleact/tree/master/alecture)
+- 위 저장소 폴더에서 제로초가 미리 짜둔 소스 복붙
+
+### CssInJs 방식으로 컴포넌트 제작
 
 ```command
 npm i @emotion/styled @emotion/react
 ```
+
+## 2일차
+
+```ts
+import { useState, useCallback, Dispatch, SetStateAction } from "react";
+
+type ReturnTypes<T = any> = [T, (e: any) => void, Dispatch<SetStateAction<T>>];
+
+const useInput = <T = any>(initialData: T): ReturnTypes<T> => {
+  const [value, setValue] = useState(initialData);
+  const handler = useCallback((e) => {
+    setValue(e.target.value);
+  }, []);
+  return [value, handler, setValue];
+};
+```
+
+- 커스텀훅 제작시 매개변수는 타입추론이 안 되어서 제네릭을 활용하여 타입을 정의해준다.
+- 타입스크립트를 하면 가독성이 상당히 안좋아진다. 하지만 안정성이 늘어난다.
+
+## 강좌
+
+- 2일차, 40:40

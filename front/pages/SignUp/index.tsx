@@ -2,12 +2,13 @@ import React, { useCallback, useState, VFC } from 'react';
 import axios from 'axios';
 import { Success, Form, Error, Label, Input, LinkContainer, Button, Header } from './styles';
 import { Link, Redirect } from 'react-router-dom';
+import useInput from '@hooks/useInput';
 
 const SignUp: VFC = () => {
-  const [email, setEmail] = useState('');
-  const [nickname, setNickname] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
+  const [email, onChangeEmail, setEmail] = useInput('');
+  const [nickname, onChangeNickname, setNickname] = useInput('');
+  const [password, , setPassword] = useInput('');
+  const [passwordCheck, , setPasswordCheck] = useInput('');
   const [mismatchError, setMismatchError] = useState(false);
   const [signUpError, setSignUpError] = useState('');
   const [signUpSuccess, setSignUpSuccess] = useState(false);
@@ -28,10 +29,15 @@ const SignUp: VFC = () => {
     [password],
   );
 
-  const onChangeEmail = useCallback((e) => {}, []);
-  const onChangeNickname = useCallback((e) => {}, []);
-
-  const onSubmit = useCallback((e) => {}, []);
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!mismatchError && nickname) {
+        console.log('서버로 회원가입하기');
+      }
+    },
+    [email, nickname, password, passwordCheck],
+  );
 
   return (
     <div id="container">
