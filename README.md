@@ -218,6 +218,12 @@ const { data } = useSWR("hello", (key) => {
 - dedupingInterval: 캐시의 유지 기간
   - 캐시의 유지 기간 내에 아무리 요청을 많이 보내봤자, 처음 성공 데이터만 그대로 가져오고 나머지 요청은 무시한다. 유지 기간이 길수록 서버에 무리가 갈 걱정이 없다.
 
+## 3일차
+
+```command
+npm i gravatar @types/gravatar
+```
+
 ## 강좌
 
-- 3일차
+- 3일차 - 01:23:40
