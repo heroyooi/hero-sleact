@@ -224,6 +224,10 @@ const { data } = useSWR("hello", (key) => {
 npm i gravatar @types/gravatar
 ```
 
+```command
+npm i react-toastify
+```
+
 ## 강좌
 
-- 3일차 - 01:23:40
+- 3일차 - 01:31:30
