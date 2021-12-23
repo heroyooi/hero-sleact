@@ -104,7 +104,7 @@ const onSubmit = useCallback(
       setSignUpError("");
       setSignUpSuccess(false);
       axios
-        .post("http://localhost:3095/api/users", {
+        .post("/api/users", {
           email,
           nickname,
           password,
@@ -138,14 +138,14 @@ const fetcher = (url: string) =>
     })
     .then((response) => response.data);
 
-const { data, error } = useSWR("http://localhost:3095/api/users", fetcher);
+const { data, error } = useSWR("/api/users", fetcher);
 const onSubmit = useCallback(
   (e) => {
     e.preventDefault();
     setLogInError(false);
     axios
       .post(
-        "http://localhost:3095/api/users/login",
+        "/api/users/login",
         { email, password },
         {
           withCredentials: true,
@@ -184,7 +184,7 @@ const LogIn = () => {
       e.preventDefault();
       axios
         .post(
-          "http://localhost:3095/api/users/login",
+          "/api/users/login",
           { email, password },
           {
             withCredentials: true,
@@ -222,12 +222,16 @@ const { data } = useSWR("hello", (key) => {
 
 ```command
 npm i gravatar @types/gravatar
+npm i react-toastify
 ```
 
+## 4일차
+
 ```command
-npm i react-toastify
+npm i react-mentions @types/react-mentions
+npm i autosize @types/autosize
 ```
 
 ## 강좌
 
-- 4일차
+- 5일차

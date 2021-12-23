@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import fetcher from '@utils/fetcher';
 
 const SignUp: VFC = () => {
-  const { data, error, mutate: revalidateUser } = useSWR('http://localhost:3095/api/users', fetcher);
+  const { data, error, mutate: revalidateUser } = useSWR('/api/users', fetcher);
   const [email, onChangeEmail, setEmail] = useInput('');
   const [nickname, onChangeNickname, setNickname] = useInput('');
   const [password, , setPassword] = useInput('');
@@ -40,7 +40,7 @@ const SignUp: VFC = () => {
         setSignUpError('');
         setSignUpSuccess(false);
         axios
-          .post('http://localhost:3095/api/users', {
+          .post('/api/users', {
             email,
             nickname,
             password,
