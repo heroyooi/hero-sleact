@@ -232,6 +232,47 @@ npm i react-mentions @types/react-mentions
 npm i autosize @types/autosize
 ```
 
+## 5일차
+
+- WebSocket, 프론트와 서버간의 실시간으로 양방향 데이터 통신이 가능해진다.
+- front, back 전부 socket.io-client@4 버전으로 업데이트
+
+```command
+npm i socket.io-client@4
+npm i -D @types/socket.io-client
+```
+
+- 컴포넌트 간의 공통되는 로직을 담당하는 부분은 훅으로 작성하면 된다.
+
+```js
+import { io } from "socket.io-client";
+
+const backUrl = "http://localhost:3095";
+const useSocket = () => {
+  const socket = io(`${backUrl}`);
+  socket.emit("hello", "world"); // 데이터 보내고,
+  socket.on("message", (data) => {
+    // 데이터 받고,
+    console.log(data);
+  });
+  socket.on("data", (data) => {
+    console.log(data);
+  });
+  socket.on("onlineList", (data) => {
+    console.log(data);
+  });
+  socket.disconnect(); // 데이터 끊고
+};
+
+export default useSocket;
+```
+
+- 프론트에서 socket.io의 사용은 emit, on, disconnect가 끝이다.
+
 ## 강좌
 
-- 5일차
+- 5일차 45:00
+
+## 참고
+
+- [강좌 소스 해답 | ZeroCho - Front](https://github.com/ZeroCho/sleact/tree/master/front)
