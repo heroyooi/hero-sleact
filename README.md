@@ -269,9 +269,14 @@ export default useSocket;
 
 - 프론트에서 socket.io의 사용은 emit, on, disconnect가 끝이다.
 
+```command
+npm i react-custom-scrollbars
+npm i @types/react-custom-scrollbars -D
+```
+
 ## 강좌
 
-- 5일차 45:00
+- 5일차 59:09
 
 ## 참고
 
