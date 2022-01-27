@@ -272,11 +272,139 @@ export default useSocket;
 ```command
 npm i react-custom-scrollbars
 npm i @types/react-custom-scrollbars -D
+npm i dayjs
+npm i react-mentions
+npm i @types/react-mentions
+npm i regexify-string
+```
+
+```tsx
+const result = regexifyString({
+  input: data.content,
+  pattern: /\n/g,
+  decorator(match, index) {
+    return <br key={index} />;
+  },
+});
+```
+
+- @[히어로](7) => @히어로 로 변환
+
+```tsx
+//
+const result = regexifyString({
+  input: data.content,
+  pattern: /@\[(.+?)]\((\d+?)\)|\n/g,
+
+  decorator(match, index) {
+    const arr: string[] | null = match.match(/@\[(.+?)]\((\d+?)\)/)!;
+    if (arr) {
+      return (
+        <Link key={match + index} to={`/workspace/${workspace}/dm/${arr[2]}`}>
+          @{arr[1]}
+        </Link>
+      );
+    }
+    return <br key={index} />;
+  },
+});
+
+/**
+ * \ 특수기호 무시
+ * . 모든 글짜
+ * \d 숫자
+ * g는 모두찾기
+ * + 1개 이상, ? 0개 이상
+ *
+ * + 1개 이상이면서 최대한 많이
+ * +? 1개 이상이면서 최대한 조금
+ */
+```
+
+### 채팅 UI 만들기
+
+```ts
+export default function makeSection(chatList: IDM[]) {
+  const sections: { [key: string]: IDM[] } = {};
+  chatList.forEach((chat) => {
+    const monthDate = dayjs(chat.createdAt).format("YYYY-MM-DD");
+    if (Array.isArray(sections[monthDate])) {
+      sections[monthDate].push(chat);
+    } else {
+      sections[monthDate] = [chat];
+    }
+  });
+  return sections;
+}
+```
+
+- 객체 모양의 날짜별로 생성되는 채팅 데이터 세팅
+- utils/makeSection.ts
+
+```js
+// chatList
+[
+  { id: 1, d: '2022-02-25' },
+  { id: 2, d: '2022-02-24' },
+  { id: 3, d: '2022-02-23' },
+  { id: 4, d: '2022-02-25' }
+]
+
+// chatSections = makeSection(chatList)
+{
+  '2022-02-25': [1, 4],
+  '2022-02-24': [2],
+  '2022-02-23': [3],
+}
+```
+
+- components/ChatList/index.tsx
+
+```tsx
+import { Scrollbars } from "react-custom-scrollbars";
+
+<Scrollbars autoHide ref={scrollbarRef} onScrollFrame={onScroll}>
+  {Object.entries(chatSections).map(([date, chats]) => {
+    return (
+      <Section className={`section-${date}`} key={date}>
+        <StickyHeader>
+          <button>{date}</button>
+        </StickyHeader>
+        {chats?.map((chat) => (
+          <Chat key={chat.id} data={chat} />
+        ))}
+      </Section>
+    );
+  })}
+</Scrollbars>;
+```
+
+```js
+// Object.entries(chatSections)
+[
+  [
+    "2022-02-23",
+    [{ id: 3, content: "내용", createdAt: "2022-12-23T04:39:14.000Z" }],
+  ],
+  ["2022-02-24", [{ id: 2 }]],
+  ["2022-02-25", [{ id: 1 }, { id: 4 }]],
+];
+```
+
+- 채팅 UI에서 필요한 이펙트들
+
+```tsx
+// 로딩 시 스크롤바 제일 아래로
+useEffect(() => {
+  if (chatData?.length === 1) {
+    scrollbarRef.current?.scrollToBottom();
+  }
+}, [chatData]);
 ```
 
 ## 강좌
 
-- 5일차 59:09
+- 6일차
 
 ## 참고
 
